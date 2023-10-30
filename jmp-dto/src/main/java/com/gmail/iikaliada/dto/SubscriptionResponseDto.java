@@ -6,7 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SubscriptionResponseDto {
+
     private Long id;
     private Long userId;
     private String startDate;
+
 }

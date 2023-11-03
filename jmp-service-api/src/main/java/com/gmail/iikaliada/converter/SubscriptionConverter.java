@@ -6,8 +6,8 @@ import com.gmail.iikaliada.entity.Subscription;
 
 public interface SubscriptionConverter {
 
-    SubscriptionResponseDto convertSubscriptionToSubscriptionDto(Subscription subscription);
+    SubscriptionResponseDto toSubscriptionDto(Subscription subscription);
 
-    Subscription convertSubscriptionDtoToSubscription(SubscriptionRequestDto subscriptionDto);
+    Subscription toSubscription(SubscriptionRequestDto subscriptionDto);
 
 }

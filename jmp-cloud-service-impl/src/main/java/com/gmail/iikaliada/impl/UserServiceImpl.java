@@ -10,10 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,13 +27,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDto createUser(UserRequestDto requestDto) {
-        User user = userConverter.convertUserDtoToUser(requestDto);
-        return userConverter.convertUserToUserDto(userRepository.save(user));
+        User user = userConverter.toUser(requestDto);
+        return userConverter.toUserDto(userRepository.save(user));
     }
 
     @Override
     public UserResponseDto updateUser(UserRequestDto requestDto) {
-        return userConverter.convertUserToUserDto(userRepository.save(userConverter.convertUserDtoToUser(requestDto)));
+        return userConverter.toUserDto(userRepository.save(userConverter.toUser(requestDto)));
     }
 
     @Override
@@ -49,16 +49,14 @@ public class UserServiceImpl implements UserService {
     public UserResponseDto getUser(Long id) {
         Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {
-            return userConverter.convertUserToUserDto(user.get());
+            return userConverter.toUserDto(user.get());
         } else
             throw new NoSuchElementException(String.format(USER_NOT_FOUND_ERROR, id));
     }
 
     @Override
     public List<UserResponseDto> getAllUser() {
-        List<UserResponseDto> userResponseDtos = new ArrayList<>();
-        userRepository.findAll().forEach(user -> userResponseDtos.add(userConverter.convertUserToUserDto(user)));
-        return userResponseDtos;
+        return userRepository.findAll().stream().map(userConverter::toUserDto).collect(Collectors.toList());
     }
 
 }

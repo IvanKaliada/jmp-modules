@@ -11,10 +11,10 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,18 +28,18 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Override
     public SubscriptionResponseDto createSubscription(SubscriptionRequestDto requestDto) {
-        Subscription subscription = subscriptionConverter.convertSubscriptionDtoToSubscription(requestDto);
+        Subscription subscription = subscriptionConverter.toSubscription(requestDto);
         subscription.setStartDate(LocalDate.now());
-        return subscriptionConverter.convertSubscriptionToSubscriptionDto(subscriptionRepository.save(subscription));
+        return subscriptionConverter.toSubscriptionDto(subscriptionRepository.save(subscription));
     }
 
     @Override
     public SubscriptionResponseDto updateSubscription(SubscriptionRequestDto requestDto) {
         Optional<Subscription> existingSubscription = subscriptionRepository.findById(requestDto.getId());
         if (existingSubscription.isPresent()) {
-            Subscription subscription = subscriptionConverter.convertSubscriptionDtoToSubscription(requestDto);
+            Subscription subscription = subscriptionConverter.toSubscription(requestDto);
             subscription.setStartDate(existingSubscription.get().getStartDate());
-            return subscriptionConverter.convertSubscriptionToSubscriptionDto(subscriptionRepository.save(subscription));
+            return subscriptionConverter.toSubscriptionDto(subscriptionRepository.save(subscription));
         } else {
             throw new NoSuchElementException(String.format(SUBSCRIPTION_NOT_FOUND_ERROR, requestDto.getId()));
         }
@@ -56,20 +56,15 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Override
     public SubscriptionResponseDto getSubscription(Long id) {
-        Optional<Subscription> subscription = subscriptionRepository.findById(id);
-        if (subscription.isPresent()) {
-            return subscriptionConverter.convertSubscriptionToSubscriptionDto(subscription.get());
-        } else {
-            throw new NoSuchElementException(String.format(SUBSCRIPTION_NOT_FOUND_ERROR, id));
-        }
+        return subscriptionRepository.findById(id)
+                .map(subscriptionConverter::toSubscriptionDto)
+                .orElseThrow(() -> new NoSuchElementException(String.format(SUBSCRIPTION_NOT_FOUND_ERROR, id)));
     }
 
     @Override
     public List<SubscriptionResponseDto> getAllSubscription() {
-        List<SubscriptionResponseDto> userResponseDtos = new ArrayList<>();
-        subscriptionRepository.findAll().forEach(subscription ->
-                userResponseDtos.add(subscriptionConverter.convertSubscriptionToSubscriptionDto(subscription)));
-        return userResponseDtos;
+        return subscriptionRepository.findAll().stream()
+                .map(subscriptionConverter::toSubscriptionDto).collect(Collectors.toList());
     }
 
 }

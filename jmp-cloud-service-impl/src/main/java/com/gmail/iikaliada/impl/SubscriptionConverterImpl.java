@@ -13,12 +13,12 @@ public class SubscriptionConverterImpl implements SubscriptionConverter {
     private final ModelMapper modelMapper = new ModelMapper();
 
     @Override
-    public SubscriptionResponseDto convertSubscriptionToSubscriptionDto(Subscription subscription) {
+    public SubscriptionResponseDto toSubscriptionDto(Subscription subscription) {
         return modelMapper.map(subscription, SubscriptionResponseDto.class);
     }
 
     @Override
-    public Subscription convertSubscriptionDtoToSubscription(SubscriptionRequestDto subscriptionDto) {
+    public Subscription toSubscription(SubscriptionRequestDto subscriptionDto) {
         return modelMapper.map(subscriptionDto, Subscription.class);
     }
 

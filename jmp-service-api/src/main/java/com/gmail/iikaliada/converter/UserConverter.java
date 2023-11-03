@@ -6,8 +6,8 @@ import com.gmail.iikaliada.entity.User;
 
 public interface UserConverter {
 
-    UserResponseDto convertUserToUserDto(User user);
+    UserResponseDto toUserDto(User user);
 
-    User convertUserDtoToUser(UserRequestDto userDto);
+    User toUser(UserRequestDto userDto);
 
 }

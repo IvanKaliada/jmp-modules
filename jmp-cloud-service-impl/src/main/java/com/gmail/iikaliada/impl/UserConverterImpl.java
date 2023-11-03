@@ -18,12 +18,12 @@ public class UserConverterImpl implements UserConverter {
     private final ModelMapper modelMapper = new ModelMapper();
 
     @Override
-    public UserResponseDto convertUserToUserDto(User user) {
+    public UserResponseDto toUserDto(User user) {
         return modelMapper.map(user, UserResponseDto.class);
     }
 
     @Override
-    public User convertUserDtoToUser(UserRequestDto userDto) {
+    public User toUser(UserRequestDto userDto) {
         Converter<String, LocalDate> toStringDate = localDateConverter();
         modelMapper.addConverter(toStringDate);
         return modelMapper.map(userDto, User.class);

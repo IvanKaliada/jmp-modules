@@ -22,7 +22,7 @@ import java.util.NoSuchElementException;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-@RequestMapping("/api/subscriptionGroup")
+@RequestMapping("/api")
 @RestController
 @RequiredArgsConstructor
 public class ServiceController implements ServiceApi{
@@ -34,7 +34,7 @@ public class ServiceController implements ServiceApi{
         return subscriptionService.createSubscription(requestDto);
     }
 
-    @PutMapping(value = "/subscriptions/update")
+    @PutMapping(value = "/subscriptions")
     public SubscriptionResponseDto updateSubscription(@RequestBody SubscriptionRequestDto requestDto) {
         return subscriptionService.updateSubscription(requestDto);
     }

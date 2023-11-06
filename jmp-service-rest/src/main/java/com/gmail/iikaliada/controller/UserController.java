@@ -22,7 +22,7 @@ import java.util.NoSuchElementException;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-@RequestMapping("/api/userGroup")
+@RequestMapping("/api")
 @RestController
 @RequiredArgsConstructor
 public class UserController implements UserApi{
@@ -34,7 +34,7 @@ public class UserController implements UserApi{
         return userService.createUser(requestDto);
     }
 
-    @PutMapping(value = "/users/update")
+    @PutMapping(value = "/users")
     public UserResponseDto updateUser(@RequestBody UserRequestDto requestDto) {
         return userService.updateUser(requestDto);
     }

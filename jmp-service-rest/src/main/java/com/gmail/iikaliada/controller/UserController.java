@@ -22,34 +22,34 @@ import java.util.NoSuchElementException;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 @RestController
 @RequiredArgsConstructor
 public class UserController implements UserApi{
 
     private final UserService userService;
 
-    @PostMapping(value = "/users")
+    @PostMapping()
     public UserResponseDto createUser(@RequestBody UserRequestDto requestDto) {
         return userService.createUser(requestDto);
     }
 
-    @PutMapping(value = "/users")
+    @PutMapping()
     public UserResponseDto updateUser(@RequestBody UserRequestDto requestDto) {
         return userService.updateUser(requestDto);
     }
 
-    @DeleteMapping(value = "/users/{id}")
+    @DeleteMapping(value = "/{id}")
     public void deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
     }
 
-    @GetMapping(value = "/users/{id}")
+    @GetMapping(value = "/{id}")
     public UserResponseDto getUser(@PathVariable("id") Long id) {
         return userService.getUser(id);
     }
 
-    @GetMapping(value = "/users")
+    @GetMapping()
     public List<UserResponseDto> getAllUser() {
         return userService.getAllUser();
     }

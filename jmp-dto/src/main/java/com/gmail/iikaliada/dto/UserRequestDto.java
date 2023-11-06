@@ -8,13 +8,13 @@ import lombok.Setter;
 @Setter
 public class UserRequestDto {
 
-    @Schema(name = "id", implementation = Long.class)
+    @Schema(name = "id", example = "1", implementation = Long.class)
     private Long id;
-    @Schema(name = "name", implementation = String.class)
+    @Schema(name = "name", example = "John", implementation = String.class)
     private String name;
-    @Schema(name = "surname", implementation = String.class)
+    @Schema(name = "surname", example = "Doe", implementation = String.class)
     private String surname;
-    @Schema(name = "birthday", implementation = String.class)
+    @Schema(name = "birthday", example = "2000-01-01", implementation = String.class)
     private String birthday;
 
 }

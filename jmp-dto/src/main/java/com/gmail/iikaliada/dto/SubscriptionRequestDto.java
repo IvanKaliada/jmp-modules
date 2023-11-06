@@ -8,9 +8,9 @@ import lombok.Setter;
 @Setter
 public class SubscriptionRequestDto {
 
-    @Schema(name = "id", implementation = Long.class)
+    @Schema(name = "id", example = "1", implementation = Long.class)
     private Long id;
-    @Schema(name = "userId", implementation = Long.class)
+    @Schema(name = "userId", example = "1", implementation = Long.class)
     private Long userId;
 
 }
